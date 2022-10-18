@@ -2,93 +2,71 @@ package com.example.dummy;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Context;
-import android.content.SharedPreferences;
+import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
-
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import java.lang.reflect.Type;
-import java.util.ArrayList;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
-    Button button ;
-    TextView textView1;
-    TextView textView2;
-    EditText expd;
-    EditText amt;
-    SharedPreferences shrd;
-    ArrayList<ModelClass> arrayList;
 
-
+    EditText username,password,repassword;
+    Button signup,signin;
+    DBHelper DB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        button = findViewById(R.id.button);
-        textView1 = findViewById(R.id.textView1);
-        textView2 = findViewById(R.id.textView2);
-        expd = findViewById(R.id.editText1);
-        amt = findViewById(R.id.editText2);
-        loadData();
+        username = findViewById(R.id.username);
+        password = findViewById(R.id.password);
+        repassword = findViewById(R.id.confirmPassword);
+        signup = findViewById(R.id.SignUpButton);
+        signin = findViewById(R.id.LogInButton);
+        DB = new DBHelper(this);
 
-
-         button.setOnClickListener(new OnClickListener() {
+        signup.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
+                String user = username.getText().toString();
+                String pass  = password.getText().toString();
+                String repass  = repassword.getText().toString();
 
-                SaveData(expd.getText().toString(),amt.getText().toString());
+                if(TextUtils.isEmpty(user) || TextUtils.isEmpty(pass) || TextUtils.isEmpty(repass)){
+                    Toast.makeText(MainActivity.this, "All fields Required.", Toast.LENGTH_SHORT).show();
+                }else {
+                    if (pass.equals(repass)){
+                        Boolean checkuser = DB.checkUserName(user);
+                        if (checkuser==false){
+                            Boolean insert= DB.insertData(user,pass);
+                            if(insert==true){
+                                Toast.makeText(MainActivity.this, "Registered Successfully", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+                                startActivity(intent);
+                            }else {
+                                Toast.makeText(MainActivity.this, "Registration Failed", Toast.LENGTH_SHORT).show();
+                            }
+                        }else {
+                            Toast.makeText(MainActivity.this, "User Already Exists", Toast.LENGTH_SHORT).show();
+                        }
+                    }else {
+                        Toast.makeText(MainActivity.this, "Password Not Matching", Toast.LENGTH_SHORT).show();
+                    }
+                }
 
             }
         });
 
-    }
+        signin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+                startActivity(intent);
 
-    private void SaveData(String exp, String amount) {
-
-        shrd = getApplicationContext().getSharedPreferences("demo", MODE_PRIVATE);
-        SharedPreferences.Editor editor = shrd.edit();
-
-        Gson gson = new Gson();
-        arrayList.add(new ModelClass(exp, Integer.parseInt(amount)));
-        String json= gson.toJson(arrayList);
-        editor.putString("expense_data", json);
-        editor.apply();
-        textView1.setText("list of expense\n");
-        textView2.setText("list of amount\n");
-        loadData();
-
-    }
-
-    private void loadData() {
-
-        shrd = getApplicationContext().getSharedPreferences("demo", MODE_PRIVATE);
-
-        Gson gson = new Gson();
-        String json = shrd.getString("expense_data",null);
-
-        Type type = new TypeToken<ArrayList<ModelClass>>(){
-        }.getType();
-
-        arrayList= gson.fromJson(json,type);
-
-        if(arrayList==null){
-            arrayList= new ArrayList<>();
-            textView1.setText(""+0);
-            textView2.setText(""+0);
-        }else{
-            for (int i=0;i<arrayList.size();i++){
-                textView1.setText(textView1.getText().toString()+"\n"+arrayList.get(i).exp+"\n");
-                textView2.setText(textView2.getText().toString()+"\n"+arrayList.get(i).amount+"\n");
             }
-        }
+        });
     }
 }
