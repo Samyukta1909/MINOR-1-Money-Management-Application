@@ -3,6 +3,7 @@ package com.example.dummy;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -15,6 +16,8 @@ public class LoginActivity extends AppCompatActivity {
     EditText username,password;
     Button signin;
     DBHelper DB;
+    SharedPreferences shrd;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,6 +41,13 @@ public class LoginActivity extends AppCompatActivity {
                     if (login==true){
                         Toast.makeText(LoginActivity.this,"Login Successfull",Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
+//                        intent.putExtra("USERNAME", user);
+
+                        shrd = getApplicationContext().getSharedPreferences("UserDetail", MODE_PRIVATE);
+                        SharedPreferences.Editor editor = shrd.edit();
+                        editor.putString("USERNAME",user);
+                        editor.apply();
+
                         startActivity(intent);
                     }else {
                         Toast.makeText(LoginActivity.this,"Login Failed",Toast.LENGTH_SHORT).show();

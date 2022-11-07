@@ -33,6 +33,7 @@
         android:id="@+id/loginPassword"
         android:hint="Password"
         android:textSize="25dp"
+        android:inputType="textPassword"
         android:textColorHint="@color/black"/>
 
     <Button

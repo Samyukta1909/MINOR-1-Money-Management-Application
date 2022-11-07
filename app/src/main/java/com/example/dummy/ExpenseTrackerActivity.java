@@ -24,6 +24,7 @@ public class ExpenseTrackerActivity extends AppCompatActivity {
     EditText amt;
     SharedPreferences shrd;
     ArrayList<ModelClass> arrayList;
+    String usernameSF;
 
 
     @Override
@@ -31,13 +32,19 @@ public class ExpenseTrackerActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_expense_tracker);
 
+
         button = findViewById(R.id.button);
         textView1 = findViewById(R.id.textView1);
         textView2 = findViewById(R.id.textView2);
         expd = findViewById(R.id.editText1);
         amt = findViewById(R.id.editText2);
+//        String username = getIntent().getStringExtra("USERNAME");
+//        System.out.println("Username is: "+username);
         loadData();
 
+        SharedPreferences prefs = getSharedPreferences("UserDetail", MODE_PRIVATE);
+        usernameSF = prefs.getString("USERNAME",null);
+        System.out.println("Username from ExpenseTracker is: "+usernameSF);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -52,7 +59,7 @@ public class ExpenseTrackerActivity extends AppCompatActivity {
 
     private void SaveData(String exp, String amount) {
 
-        shrd = getApplicationContext().getSharedPreferences("demo", MODE_PRIVATE);
+        shrd = getApplicationContext().getSharedPreferences(usernameSF, MODE_PRIVATE);
         SharedPreferences.Editor editor = shrd.edit();
 
         Gson gson = new Gson();
@@ -68,7 +75,7 @@ public class ExpenseTrackerActivity extends AppCompatActivity {
 
     private void loadData() {
 
-        shrd = getApplicationContext().getSharedPreferences("demo", MODE_PRIVATE);
+        shrd = getApplicationContext().getSharedPreferences(usernameSF, MODE_PRIVATE);
 
         Gson gson = new Gson();
         String json = shrd.getString("expense_data",null);
