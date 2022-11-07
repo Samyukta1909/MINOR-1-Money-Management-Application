@@ -15,6 +15,7 @@ public class LoginActivity extends AppCompatActivity {
 
     EditText username,password;
     Button signin;
+    Button signup;
     DBHelper DB;
     SharedPreferences shrd;
 
@@ -41,7 +42,6 @@ public class LoginActivity extends AppCompatActivity {
                     if (login==true){
                         Toast.makeText(LoginActivity.this,"Login Successfull",Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
-//                        intent.putExtra("USERNAME", user);
 
                         shrd = getApplicationContext().getSharedPreferences("UserDetail", MODE_PRIVATE);
                         SharedPreferences.Editor editor = shrd.edit();
@@ -55,6 +55,15 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+
+    signup.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            Intent intent = new Intent(getApplicationContext(),SignUp.class);
+            startActivity(intent);
+
+        }
+    });
 
     }
 }

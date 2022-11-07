@@ -38,14 +38,14 @@ public class ExpenseTrackerActivity extends AppCompatActivity {
         textView2 = findViewById(R.id.textView2);
         expd = findViewById(R.id.editText1);
         amt = findViewById(R.id.editText2);
-//        String username = getIntent().getStringExtra("USERNAME");
-//        System.out.println("Username is: "+username);
-        loadData();
+
 
         SharedPreferences prefs = getSharedPreferences("UserDetail", MODE_PRIVATE);
         usernameSF = prefs.getString("USERNAME",null);
         System.out.println("Username from ExpenseTracker is: "+usernameSF);
+        System.out.println("Type from ExpenseTracker is: "+usernameSF.getClass());
 
+        loadData();
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

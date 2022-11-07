@@ -6,12 +6,12 @@
     android:layout_height="match_parent"
     android:padding="10dp"
     android:orientation="vertical"
-    tools:context=".LoginActivity">
+    tools:context=".SignUp">
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Log In"
+        android:text="Sign Up"
         android:textColor="@color/black"
         android:textSize="50dp"
         android:textStyle="bold"
@@ -22,7 +22,7 @@
     <EditText
         android:layout_width="380dp"
         android:layout_height="wrap_content"
-        android:id="@+id/loginUsername"
+        android:id="@+id/username"
         android:hint="Username"
         android:textSize="25dp"
         android:textColorHint="@color/black"/>
@@ -30,8 +30,17 @@
     <EditText
         android:layout_width="380dp"
         android:layout_height="wrap_content"
-        android:id="@+id/loginPassword"
+        android:id="@+id/password"
         android:hint="Password"
+        android:textSize="25dp"
+        android:inputType="textPassword"
+        android:textColorHint="@color/black"/>
+
+    <EditText
+        android:layout_width="380dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/confirmPassword"
+        android:hint="Confirm Password"
         android:textSize="25dp"
         android:inputType="textPassword"
         android:textColorHint="@color/black"/>
@@ -39,17 +48,16 @@
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Login"
+        android:text="SignUp"
+        android:id="@+id/SignUpButton"
         android:layout_marginTop="25dp"
-        android:id="@+id/FinalLogInButton"
+        android:layout_marginBottom="15dp"
         android:layout_marginHorizontal="90dp"/>
-
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="SignUp"
-        android:layout_marginTop="25dp"
-        android:id="@+id/FinalSignUpButton"
+        android:text="Login"
+        android:id="@+id/LogInButton"
         android:layout_marginHorizontal="90dp"/>
 
 </LinearLayout>

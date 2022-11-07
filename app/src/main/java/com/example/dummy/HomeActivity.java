@@ -27,7 +27,7 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-                Intent intent1 = new Intent(HomeActivity.this,ExpenseTrackerActivity.class);
+                Intent intent1 = new Intent(getApplicationContext(),ExpenseTrackerActivity.class);
                 startActivity(intent1);
             }
         });
