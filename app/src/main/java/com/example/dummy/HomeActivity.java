@@ -19,11 +19,15 @@ public class HomeActivity extends AppCompatActivity {
         button2 = findViewById(R.id.button2);
         button3 = findViewById(R.id.button3);
 
+
+//        String username = getIntent().getStringExtra("USERNAME");
+//        System.out.println("Username is: "+username);
+
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                Intent intent1 = new Intent(HomeActivity.this,ExpenseTrackerActivity.class);
+                Intent intent1 = new Intent(getApplicationContext(),ExpenseTrackerActivity.class);
                 startActivity(intent1);
             }
         });
