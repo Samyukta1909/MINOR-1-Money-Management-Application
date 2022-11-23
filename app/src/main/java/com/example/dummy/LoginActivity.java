@@ -14,8 +14,8 @@ import android.widget.Toast;
 public class LoginActivity extends AppCompatActivity {
 
     EditText username,password;
-    Button signin;
-    Button signup;
+    Button signIn;
+    Button signUp;
     DBHelper DB;
     SharedPreferences shrd;
 
@@ -26,10 +26,12 @@ public class LoginActivity extends AppCompatActivity {
 
         username = findViewById(R.id.loginUsername);
         password = findViewById(R.id.loginPassword);
-        signin = findViewById(R.id.FinalLogInButton);
+        signIn = findViewById(R.id.FinalLogInButton);
+        signUp = findViewById(R.id.FinalSignUpButton);
+
         DB = new DBHelper(this);
 
-        signin.setOnClickListener(new View.OnClickListener() {
+        signIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String user = username.getText().toString();
@@ -56,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-    signup.setOnClickListener(new View.OnClickListener() {
+    signUp.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(getApplicationContext(),SignUp.class);

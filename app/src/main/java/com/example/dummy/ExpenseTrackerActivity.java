@@ -87,8 +87,8 @@ public class ExpenseTrackerActivity extends AppCompatActivity {
 
         if(arrayList==null){
             arrayList= new ArrayList<>();
-            textView1.setText(""+0);
-            textView2.setText(""+0);
+            textView1.setText("list of expense");
+            textView2.setText("list of amount");
         }else{
             for (int i=0;i<arrayList.size();i++){
                 textView1.setText(textView1.getText().toString()+"\n"+arrayList.get(i).exp+"\n");
