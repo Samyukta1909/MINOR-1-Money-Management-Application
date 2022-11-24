@@ -70,7 +70,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private void logoutUser() {
         logout();
-        Intent intent2=new Intent(HomeActivity.this,SignUp.class);
+        Intent intent2=new Intent(HomeActivity.this,LoginActivity.class);
         intent2.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK| Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent2);
         Toast.makeText(this, "You have been logged out", Toast.LENGTH_SHORT).show();
