@@ -56,4 +56,9 @@ public class DBHelper extends SQLiteOpenHelper {
         else
             return false;
     }
+    public void LoggedOutUser(String username){
+        SQLiteDatabase db  = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery("delete from users where username=?",new String[] {username});
+
+    }
 }
