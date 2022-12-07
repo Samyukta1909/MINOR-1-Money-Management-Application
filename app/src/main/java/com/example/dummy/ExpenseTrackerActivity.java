@@ -1,7 +1,9 @@
 package com.example.dummy;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -17,7 +19,7 @@ import java.util.ArrayList;
 
 public class ExpenseTrackerActivity extends AppCompatActivity {
 
-    Button button ;
+    Button save,total;
     TextView textView1;
     TextView textView2;
     EditText expd;
@@ -26,6 +28,11 @@ public class ExpenseTrackerActivity extends AppCompatActivity {
     ArrayList<ModelClass> arrayList;
     String usernameSF;
 
+    private AlertDialog.Builder dialogbuilder;
+    private AlertDialog dialog;
+    private TextView sum;
+    private Button ok;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +40,8 @@ public class ExpenseTrackerActivity extends AppCompatActivity {
         setContentView(R.layout.activity_expense_tracker);
 
 
-        button = findViewById(R.id.button);
+        save = findViewById(R.id.button1);
+        total = findViewById(R.id.button2);
         textView1 = findViewById(R.id.textView1);
         textView2 = findViewById(R.id.textView2);
         expd = findViewById(R.id.editText1);
@@ -42,11 +50,10 @@ public class ExpenseTrackerActivity extends AppCompatActivity {
 
         SharedPreferences prefs = getSharedPreferences("UserDetail", MODE_PRIVATE);
         usernameSF = prefs.getString("USERNAME",null);
-        System.out.println("Username from ExpenseTracker is: "+usernameSF);
-        System.out.println("Type from ExpenseTracker is: "+usernameSF.getClass());
+
 
         loadData();
-        button.setOnClickListener(new View.OnClickListener() {
+        save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -55,6 +62,49 @@ public class ExpenseTrackerActivity extends AppCompatActivity {
             }
         });
 
+        total.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int total = 0;
+
+                shrd = getApplicationContext().getSharedPreferences(usernameSF, MODE_PRIVATE);
+
+                Gson gson = new Gson();
+                String json = shrd.getString("expense_data", null);
+
+                Type type = new TypeToken<ArrayList<ModelClass>>() {
+                }.getType();
+
+                arrayList = gson.fromJson(json, type);
+
+                    for (int i = 0; i < arrayList.size(); i++) {
+                        int temp = arrayList.get(i).amount;
+                        total = total + temp;
+                    }
+                    createNewSumDialog(total);
+                }
+
+        });
+    }
+    public void createNewSumDialog(int total) {
+        dialogbuilder = new AlertDialog.Builder(this);
+        final View SumPopup = getLayoutInflater().inflate(R.layout.total_popup, null);
+
+        sum = (TextView) SumPopup.findViewById(R.id.display);
+        ok = (Button) SumPopup.findViewById(R.id.close);
+
+        dialogbuilder.setView(SumPopup);
+        dialog = dialogbuilder.create();
+        dialog.show();
+
+        sum.setText("The total amount spend is "+ total);
+
+        ok.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
     }
 
     private void SaveData(String exp, String amount) {
@@ -93,7 +143,9 @@ public class ExpenseTrackerActivity extends AppCompatActivity {
             for (int i=0;i<arrayList.size();i++){
                 textView1.setText(textView1.getText().toString()+"\n"+arrayList.get(i).exp+"\n");
                 textView2.setText(textView2.getText().toString()+"\n"+arrayList.get(i).amount+"\n");
+
             }
         }
     }
+
 }
