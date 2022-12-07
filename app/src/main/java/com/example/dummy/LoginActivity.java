@@ -41,19 +41,26 @@ public class LoginActivity extends AppCompatActivity {
                 if (TextUtils.isEmpty(user) || TextUtils.isEmpty(pass)){
                     Toast.makeText(LoginActivity.this, "All Fields are Required",Toast.LENGTH_SHORT).show();
                 }else {
-                    Boolean login = DB.checkUsernamePassword(user,pass);
-                    if (login==true){
-                        Toast.makeText(LoginActivity.this,"Login Successfull",Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
+                    Boolean userRegCheck = DB.usernameRegCheck(user);
+                    Boolean passRegCheck = DB.passwordRegCheck(pass);
 
-                        shrd = getApplicationContext().getSharedPreferences("UserDetail", MODE_PRIVATE);
-                        SharedPreferences.Editor editor = shrd.edit();
-                        editor.putString("USERNAME",user);
-                        editor.apply();
+                    if(userRegCheck == true && passRegCheck == true){
+                        Boolean login = DB.checkUsernamePassword(user,pass);
+                        if (login==true){
+                            Toast.makeText(LoginActivity.this,"Login Successfull",Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(getApplicationContext(),HomeActivity.class);
 
-                        startActivity(intent);
+                            shrd = getApplicationContext().getSharedPreferences("UserDetail", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = shrd.edit();
+                            editor.putString("USERNAME",user);
+                            editor.apply();
+
+                            startActivity(intent);
+                        }else {
+                            Toast.makeText(LoginActivity.this,"Login Failed",Toast.LENGTH_SHORT).show();
+                        }
                     }else {
-                        Toast.makeText(LoginActivity.this,"Login Failed",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LoginActivity.this,"Invalid Username/Password Format",Toast.LENGTH_SHORT).show();
                     }
                 }
             }

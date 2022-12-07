@@ -39,18 +39,25 @@ public class SignUp extends AppCompatActivity {
                     Toast.makeText(SignUp.this, "All fields Required.", Toast.LENGTH_SHORT).show();
                 }else {
                     if (pass.equals(repass)){
-                        Boolean checkuser = DB.checkUserName(user);
-                        if (checkuser==false){
-                            Boolean insert= DB.insertData(user,pass);
-                            if(insert==true){
-                                Toast.makeText(SignUp.this, "Registered Successfully", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
-                                startActivity(intent);
+                        Boolean userRegCheck = DB.usernameRegCheck(user);
+                        Boolean passRegCheck = DB.passwordRegCheck(pass);
+
+                        if (userRegCheck==true && passRegCheck==true){
+                            Boolean checkuser = DB.checkUserName(user);
+                            if (checkuser==false){
+                                Boolean insert= DB.insertData(user,pass);
+                                if(insert==true){
+                                    Toast.makeText(SignUp.this, "Registered Successfully", Toast.LENGTH_SHORT).show();
+                                    Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
+                                    startActivity(intent);
+                                }else {
+                                    Toast.makeText(SignUp.this, "Registration Failed", Toast.LENGTH_SHORT).show();
+                                }
                             }else {
-                                Toast.makeText(SignUp.this, "Registration Failed", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(SignUp.this, "User Already Exists", Toast.LENGTH_SHORT).show();
                             }
-                        }else {
-                            Toast.makeText(SignUp.this, "User Already Exists", Toast.LENGTH_SHORT).show();
+                    }else {
+                            Toast.makeText(SignUp.this, "Invalid Username/Password Format", Toast.LENGTH_SHORT).show();
                         }
                     }else {
                         Toast.makeText(SignUp.this, "Password Not Matching", Toast.LENGTH_SHORT).show();

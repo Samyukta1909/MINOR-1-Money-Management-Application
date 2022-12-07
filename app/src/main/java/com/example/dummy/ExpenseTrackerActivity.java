@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -27,6 +28,7 @@ public class ExpenseTrackerActivity extends AppCompatActivity {
     SharedPreferences shrd;
     ArrayList<ModelClass> arrayList;
     String usernameSF;
+    DBHelper DB;
 
     private AlertDialog.Builder dialogbuilder;
     private AlertDialog dialog;
@@ -46,7 +48,7 @@ public class ExpenseTrackerActivity extends AppCompatActivity {
         textView2 = findViewById(R.id.textView2);
         expd = findViewById(R.id.editText1);
         amt = findViewById(R.id.editText2);
-
+        DB = new DBHelper(this);
 
         SharedPreferences prefs = getSharedPreferences("UserDetail", MODE_PRIVATE);
         usernameSF = prefs.getString("USERNAME",null);
@@ -56,8 +58,13 @@ public class ExpenseTrackerActivity extends AppCompatActivity {
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                SaveData(expd.getText().toString(),amt.getText().toString());
+                boolean amtRegCheck = DB.amountRegCheck(amt.getText().toString());
+                boolean expensenameRegCheck = DB.expenseNameRegCheck(expd.getText().toString());
+                if(amtRegCheck==true && expensenameRegCheck==true){
+                    SaveData(expd.getText().toString(),amt.getText().toString());
+                }else {
+                    Toast.makeText(ExpenseTrackerActivity.this,"Invalid Entry",Toast.LENGTH_SHORT).show();
+                }
 
             }
         });
@@ -65,7 +72,7 @@ public class ExpenseTrackerActivity extends AppCompatActivity {
         total.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int total = 0;
+                Integer total=0;
 
                 shrd = getApplicationContext().getSharedPreferences(usernameSF, MODE_PRIVATE);
 
@@ -76,17 +83,19 @@ public class ExpenseTrackerActivity extends AppCompatActivity {
                 }.getType();
 
                 arrayList = gson.fromJson(json, type);
-
+                System.out.println("ArrayList: "+arrayList);
+                if(arrayList != null){
                     for (int i = 0; i < arrayList.size(); i++) {
                         int temp = arrayList.get(i).amount;
                         total = total + temp;
                     }
-                    createNewSumDialog(total);
+                }
+                    createNewSumDialog(total.toString());
                 }
 
         });
     }
-    public void createNewSumDialog(int total) {
+    public void createNewSumDialog(String total) {
         dialogbuilder = new AlertDialog.Builder(this);
         final View SumPopup = getLayoutInflater().inflate(R.layout.total_popup, null);
 
@@ -97,7 +106,7 @@ public class ExpenseTrackerActivity extends AppCompatActivity {
         dialog = dialogbuilder.create();
         dialog.show();
 
-        sum.setText("The total amount spend is "+ total);
+        sum.setText("The total amount spend is "+total);
 
         ok.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,8 +125,8 @@ public class ExpenseTrackerActivity extends AppCompatActivity {
         arrayList.add(new ModelClass(exp, Integer.parseInt(amount)));
         String json= gson.toJson(arrayList);
         editor.putString("expense_data", json);
-        textView1.setText("list of expense\n");
-        textView2.setText("list of amount\n");
+        textView1.setText("List of Expense\n");
+        textView2.setText("List of Amount\n");
         editor.apply();
         loadData();
 
@@ -137,8 +146,8 @@ public class ExpenseTrackerActivity extends AppCompatActivity {
 
         if(arrayList==null){
             arrayList= new ArrayList<>();
-            textView1.setText("list of expense");
-            textView2.setText("list of amount");
+            textView1.setText("List of Expense");
+            textView2.setText("List of Amount");
         }else{
             for (int i=0;i<arrayList.size();i++){
                 textView1.setText(textView1.getText().toString()+"\n"+arrayList.get(i).exp+"\n");
