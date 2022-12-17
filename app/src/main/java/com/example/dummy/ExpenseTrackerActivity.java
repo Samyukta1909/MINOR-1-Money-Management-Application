@@ -66,6 +66,8 @@ public class ExpenseTrackerActivity extends AppCompatActivity {
                     Toast.makeText(ExpenseTrackerActivity.this,"Invalid Entry",Toast.LENGTH_SHORT).show();
                 }
 
+                expd.setText("");
+                amt.setText("");
             }
         });
 
