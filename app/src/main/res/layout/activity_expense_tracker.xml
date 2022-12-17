@@ -46,6 +46,7 @@
             android:layout_marginStart="52dp"
             android:layout_marginTop="268dp"
             android:text="Save"
+            android:textColor="@color/white"
             app:layout_constraintEnd_toStartOf="@+id/button2"
             app:layout_constraintHorizontal_bias="0.024"
             app:layout_constraintStart_toStartOf="parent"
@@ -57,6 +58,7 @@
             android:layout_height="43dp"
             android:layout_marginTop="268dp"
             android:text="Total"
+            android:textColor="@color/white"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.822"
             app:layout_constraintStart_toStartOf="parent"
@@ -68,7 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="76dp"
             android:layout_marginTop="50dp"
-            android:text="list of expense"
+            android:text="List of Expense"
             android:textAlignment="viewStart"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -82,7 +84,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
             android:layout_marginEnd="68dp"
-            android:text="list of amount"
+            android:text="List of Amount"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/button2"
@@ -90,4 +92,5 @@
             tools:ignore="MissingConstraints" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </ScrollView>
