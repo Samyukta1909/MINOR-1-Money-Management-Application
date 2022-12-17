@@ -48,11 +48,11 @@ public class DetailActivity extends AppCompatActivity {
 
         if (button.equalsIgnoreCase("pay"))
         {
-            amount =Integer.parseInt(newperson_amount.getText().toString())*-1;
+            amount =(Integer.parseInt(newperson_amount.getText().toString()))*-1;
         }
-        else
-            amount=Integer.parseInt(newperson_amount.getText().toString());
-
+        else {
+            amount = Integer.parseInt(newperson_amount.getText().toString());
+        }
         int id = Detail.detailsArrayList.size();
         Detail newDet = new Detail(id, name, amount, contact, button);
         Detail.detailsArrayList.add(newDet);
