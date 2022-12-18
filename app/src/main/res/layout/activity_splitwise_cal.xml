@@ -41,6 +41,17 @@
         app:rippleColor="@color/white"
         tools:ignore="OnClick" />
 
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="346dp"
+        android:layout_height="267dp"
+        android:layout_marginTop="64dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button2"
+        app:srcCompat="@drawable/b" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 

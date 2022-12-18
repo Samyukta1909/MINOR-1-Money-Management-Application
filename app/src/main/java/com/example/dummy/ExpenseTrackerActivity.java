@@ -127,6 +127,7 @@ public class ExpenseTrackerActivity extends AppCompatActivity {
         Gson gson = new Gson();
         arrayList.add(new ModelClass(exp, Integer.parseInt(amount)));
         String json= gson.toJson(arrayList);
+
         editor.putString("expense_data", json);
         textView1.setText("List of Expense\n");
         textView2.setText("List of Amount\n");

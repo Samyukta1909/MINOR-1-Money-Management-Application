@@ -11,13 +11,21 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:gravity="center_horizontal"
         android:text="Sign Up"
         android:textColor="@color/black"
-        android:textSize="50dp"
-        android:textStyle="bold"
-        android:gravity="center_horizontal"
-        android:layout_marginTop="48dp"
-        android:layout_marginBottom="50dp"/>
+        android:textSize="60dp"
+        android:textStyle="bold" />
+
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="222dp"
+        android:layout_height="121dp"
+        android:layout_marginLeft="80dp"
+        android:layout_marginBottom="5dp"
+        app:srcCompat="@drawable/a_new" />
 
     <EditText
         android:layout_width="380dp"
@@ -61,5 +69,7 @@
         android:id="@+id/LogInButton"
         android:textColor="@color/white"
         android:layout_marginHorizontal="90dp"/>
+
+
 
 </LinearLayout>
