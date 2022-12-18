@@ -23,7 +23,7 @@ public class SplitwiseCal extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splitwise_cal);
         findPath(name_amount);
-        System.out.println(FINALprintBill);
+        System.out.println("FinalPrintBill: "+FINALprintBill);
         Log.i("has", String.valueOf(name_amount));
     }
 

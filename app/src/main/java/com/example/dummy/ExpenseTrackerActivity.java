@@ -97,6 +97,7 @@ public class ExpenseTrackerActivity extends AppCompatActivity {
 
         });
     }
+
     public void createNewSumDialog(String total) {
         dialogbuilder = new AlertDialog.Builder(this);
         final View SumPopup = getLayoutInflater().inflate(R.layout.total_popup, null);

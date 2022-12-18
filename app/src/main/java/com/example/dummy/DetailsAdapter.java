@@ -10,31 +10,49 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class DetailsAdapter extends ArrayAdapter<Detail> {
+
+
+    private Context a;
+
+    private List<Detail> mylist;
     public DetailsAdapter(Context context, List<Detail> ndet)
     {
         super(context,0, ndet);
+        a=context;
+        mylist=ndet;
     }
+
+    @Override
+    public int getCount() {
+        return mylist.size();
+    }
+
 
 
     public View getView(int position, @Nullable View convertView, @NonNull ViewGroup parent)
     {
-        Detail det = getItem(position);
-        if(convertView == null)
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.details, parent, false);
 
-        TextView name = convertView.findViewById(R.id.nameview);
-        TextView amount = convertView.findViewById(R.id.amountview);
-        TextView contact = convertView.findViewById(R.id.cnoview);
-        TextView button = convertView.findViewById(R.id.button);
 
-        name.setText(det.getName());
-        amount.setText(Integer.toString(det.getAmount()));
-        contact.setText(det.getCno());
-        button.setText(det.getButton());
+        View listItem = convertView;
+        if(listItem == null)
+            listItem = LayoutInflater.from(a).inflate(R.layout.details,parent,false);
 
-        return convertView;
+        Detail currentdetail = mylist.get(position);
+
+        TextView name = (TextView) listItem.findViewById(R.id.nameview);
+        TextView amount = (TextView) listItem.findViewById(R.id.amountview);
+        TextView contact = (TextView) listItem.findViewById(R.id.cnoview);
+        TextView button = (TextView) listItem.findViewById(R.id.button);
+
+        name.setText(currentdetail.getName());
+        amount.setText(Integer.toString(currentdetail.getAmount()));
+        contact.setText(currentdetail.getCno());
+        button.setText(currentdetail.getButton());
+
+        return listItem;
     }
 }

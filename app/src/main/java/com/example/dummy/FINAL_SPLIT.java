@@ -14,11 +14,17 @@ public class FINAL_SPLIT extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_final_split);
+//        ArrayList finalBill = SplitwiseCal.FINALprintBill;
 
-        Bundle bundle= getIntent().getExtras();
-        ArrayList<String> arrayList= bundle.getStringArrayList("Split array");
-        ListView listview = findViewById(R.id.splitlist);
-        ArrayAdapter<String > it= new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, arrayList);
-        listview.setAdapter(it);
+        ArrayAdapter adapter = new ArrayAdapter<ArrayList>(this, R.layout.activity_listview,SplitwiseCal.FINALprintBill);
+//        ArrayAdapter adapter = new ArrayAdapter<ArrayList>(this, R.layout.activity_listview, (ArrayList[]) finalBill.get(i));
+
+        ListView listView = (ListView) findViewById(R.id.splitlist);
+
+
+        listView.setAdapter(adapter);
+
+
+
     }
 }
